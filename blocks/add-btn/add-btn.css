@@ -1,0 +1,10 @@
+.add-btn {
+  width: 150px;
+  height: 50px;
+  box-sizing: border-box;
+  background-image: url('../../images/add-btn.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+}
