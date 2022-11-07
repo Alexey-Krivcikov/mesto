@@ -7,3 +7,11 @@
   background-position: center;
   border: 1px solid #FFFFFF;
 }
+
+@media all and (max-width: 450px) {
+  .edit-btn {
+    width: 18px;
+    height: 18px;
+    background-size: 7.5px 7.5px;
+  }
+}

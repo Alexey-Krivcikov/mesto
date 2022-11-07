@@ -5,6 +5,14 @@
   background-image: url('../../images/add-btn.svg');
   background-repeat: no-repeat;
   background-position: center;
+
   border: 2px solid #FFFFFF;
   border-radius: 2px;
+}
+
+@media all and (max-width: 450px){
+  .add-btn {
+    width: 282px;
+    background-size: 16px 16px;
+  }
 }
