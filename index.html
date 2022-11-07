@@ -13,6 +13,7 @@
   </header>
 
   <main class="main page__main">
+
     <section class="main__profile profile">
       <img class="avatar" src="./images/avatar.png" alt="аватар">
       <div class="profile__info">
@@ -76,5 +77,21 @@
   <footer class="page__footer footer">
     <h3 class="footer__copyright">&copy;&nbsp;2022 Mesto Russia</h3>
   </footer>
+
+  <div class="popup">
+    <div class="popup__container">
+      <h3 class="popup__title">Редактировать профиль</h3>
+      <form class="popup__form" action="#">
+        <label class="popup__label-item" for="username"></label>
+        <input class="popup__input" id="username" type="text" value="Жак-Ив Кусто">
+
+        <label class="popup__label-item" for="user-status"></label>
+        <input class="popup__input" id="user-status" type="text" value="Исследователь океана">
+
+        <button class="popup__btn" type="submit">Сохранить</button>
+      </form>
+      <div class="popup__close-btn"></div>
+    </div>
+  </div>
 </body>
 </html>
