@@ -18,6 +18,7 @@
 /* ! main */
 @import url(../blocks/main/main.css);
 @import url(../blocks/main/__profile/main__profile.css);
+@import url(../blocks/main/__cards/main__cards.css);
 
 /* ! profile */
 @import url(../blocks/profile/profile.css);
@@ -36,3 +37,17 @@
 
 /* ! edit-btn */
 @import url(../blocks/edit-btn/edit-btn.css);
+
+/* ! cards */
+@import url(../blocks/cards/cards.css);
+@import url(../blocks/cards/__list/cards__list.css);
+
+/* ! card */
+@import url(../blocks/card/card.css);
+@import url(../blocks/card/__img/card__img.css);
+@import url(../blocks/card/__like-btn/card__like-btn.css);
+@import url(../blocks/card/__text/card__text.css);
+@import url(../blocks/card/__title/card__title.css);
+
+/* ! like-btn */
+@import url(../blocks/like-btn/like-btn.css);
