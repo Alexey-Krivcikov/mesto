@@ -1,4 +1,5 @@
 .edit-btn {
+  cursor: pointer;
   width: 24px;
   height: 24px;
   box-sizing: border-box;
@@ -6,6 +7,11 @@
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid #FFFFFF;
+  transition: opacity .5s;
+}
+
+.edit-btn:hover {
+  opacity: .6;
 }
 
 @media all and (max-width: 450px) {
