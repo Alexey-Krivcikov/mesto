@@ -4,3 +4,17 @@
   align-items: center;
   color: #FFFFFF;
 }
+
+@media all and (max-width: 900px){
+  .profile {
+    box-sizing: border-box;
+    padding: 0 10px 0;
+  }
+}
+
+@media all and (max-width: 680px){
+  .profile {
+    padding: 0;
+    flex-direction: column;
+  }
+}

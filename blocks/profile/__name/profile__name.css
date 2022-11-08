@@ -4,3 +4,17 @@
   line-height: 48px;
   margin: 0;
 }
+
+@media all and (max-width: 680px) {
+  .profile__name {
+    margin-top: 26px;
+  }
+}
+
+@media all and (max-width: 450px) {
+  .profile__name {
+    font-size: 27px;
+    line-height: 33px;
+    text-align: center;
+  }
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,12 +8,14 @@
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
+
 <body class="page">
   <header class="page__header header">
     <img class="logo" src="./images/logo.svg" alt="логотип mesto">
   </header>
 
   <main class="main page__main">
+
     <section class="main__profile profile">
       <img class="avatar" src="./images/avatar.png" alt="аватар">
       <div class="profile__info">
@@ -24,6 +27,76 @@
       </div>
       <div class="profile__add-btn add-btn"></div>
     </section>
+
+    <section class="main__cards cards">
+      <ul class="cards__list">
+        <li class="card">
+          <img class="card__img" src="./images/card_1.jpg" alt="Карачаевск">
+          <div class="card__text">
+            <h2 class="card__title">Карачаевск</h2>
+            <div class="card__like-btn like-btn"></div>
+          </div>
+        </li>
+        <li class="card">
+          <img class="card__img" src="./images/card_2.jpg" alt="Гора Эльбрус">
+          <div class="card__text">
+            <h2 class="card__title">Гора Эльбрус</h2>
+            <div class="card__like-btn like-btn"></div>
+          </div>
+        </li>
+        <li class="card">
+          <img class="card__img" src="./images/card-3.jpg" alt="Домбай">
+          <div class="card__text">
+            <h2 class="card__title">Домбай</h2>
+            <div class="card__like-btn like-btn"></div>
+          </div>
+        </li>
+        <li class="card">
+          <img class="card__img" src="./images/card_4.jpg" alt="Водопады Игуасу">
+          <div class="card__text">
+            <h2 class="card__title">Водопады Игуасу</h2>
+            <div class="card__like-btn like-btn"></div>
+          </div>
+        </li>
+        <li class="card">
+          <img class="card__img" src="./images/card_5.jpg" alt="Петра">
+          <div class="card__text">
+            <h2 class="card__title">Петра</h2>
+            <div class="card__like-btn like-btn"></div>
+          </div>
+        </li>
+        <li class="card">
+          <img class="card__img" src="./images/card_6.jpg" alt="Гейрангер-фьорд">
+          <div class="card__text">
+            <h2 class="card__title">Гейрангер-фьорд</h2>
+            <div class="card__like-btn like-btn"></div>
+          </div>
+        </li>
+      </ul>
+    </section>
   </main>
+
+  <footer class="page__footer footer">
+    <h3 class="footer__copyright">&copy;&nbsp;2022 Mesto Russia</h3>
+  </footer>
+
+  <div class="popup">
+    <div class="popup__container">
+      <h3 class="popup__title">Редактировать профиль</h3>
+      <form class="popup__form" action="#">
+        <label class="popup__label-item" for="username"></label>
+        <input class="popup__input popup__input_type_name" id="username" type="text">
+
+        <label class="popup__label-item" for="user-status"></label>
+        <input class="popup__input popup__input_type_job" id="user-status" type="text">
+
+        <button class="popup__btn" type="submit">Сохранить</button>
+      </form>
+      <div class="popup__close-btn"></div>
+    </div>
+  </div>
+
+  <script src="./js/main.js"></script>
 </body>
+
 </html>

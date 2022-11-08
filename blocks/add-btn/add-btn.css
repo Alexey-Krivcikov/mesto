@@ -1,4 +1,5 @@
 .add-btn {
+  cursor: pointer;
   width: 150px;
   height: 50px;
   box-sizing: border-box;
@@ -7,4 +8,16 @@
   background-position: center;
   border: 2px solid #FFFFFF;
   border-radius: 2px;
+  transition: opacity .5s;
+}
+
+.add-btn:hover {
+  opacity: .6;
+}
+
+@media all and (max-width: 450px){
+  .add-btn {
+    width: 282px;
+    background-size: 16px 16px;
+  }
 }
