@@ -5,6 +5,7 @@
 
 @media all and (max-width: 680px){
   .profile__info {
+    max-width: 280px;
     margin-left: 0;
   }
 }
