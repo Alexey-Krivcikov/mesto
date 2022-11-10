@@ -18,12 +18,6 @@ function closePopup () {
   popup.classList.remove('popup_opened');
 }
 
-function closePopupOutside (evt) {
-  if(evt.target === evt.currentTarget) {
-    closePopup();
-  }
-}
-
 // ! Редактирование и сохранение данных в popup'e
 function formSubmitHandler (evt) {
   evt.preventDefault();
@@ -33,8 +27,6 @@ function formSubmitHandler (evt) {
   closePopup();
 }
 
-// ! eventListener's
 editBtn.addEventListener('click', showPopup);
 closeBtn.addEventListener('click', closePopup);
 popupForm.addEventListener('submit', formSubmitHandler);
-popup.addEventListener('click', closePopupOutside);
