@@ -54,9 +54,6 @@
 @import url(../blocks/card/__text/card__text.css);
 @import url(../blocks/card/__title/card__title.css);
 
-/* ! like-btn */
-@import url(../blocks/like-btn/like-btn.css);
-
 /* ! footer */
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
