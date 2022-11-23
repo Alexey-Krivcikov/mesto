@@ -1,6 +1,9 @@
 const popup = document.querySelector('.popup');
+const popupCard = document.querySelector('.popup_type_card')
 const editBtn = document.querySelector('.profile__edit-btn');
-const closeBtn = document.querySelector('.popup__close-btn');
+const addBtn = document.querySelector('.profile__add-btn');
+const closeBtns = document.querySelectorAll('.popup__close-btn');
+const popups = document.querySelectorAll('.popup');
 const popupForm = document.querySelector('.popup__form');
 const nameInput = popupForm.querySelector('.popup__input_type_name');
 const jobInput = popupForm.querySelector('.popup__input_type_job');
@@ -45,25 +48,34 @@ for (let i = 0; i < initialCards.length; i++) {
 }
 
 // ! Открытие и закрытие popup'a
-function showPopup() {
+const showPopup = function() {
   popup.classList.add('popup_opened');
   nameInput.value = userName.textContent;
   jobInput.value = userJob.textContent;
 }
 
-function closePopup() {
-  popup.classList.remove('popup_opened');
+const showCardPopup = function() {
+  popupCard.classList.add('popup_opened');
+}
+
+const closePopup = function() {
+  popups.forEach(popup => {
+    popup.classList.remove('popup_opened');
+  });
 }
 
 // ! Редактирование и сохранение данных в popup'e
-function formSubmitHandler(evt) {
+const formSubmitHandler = function (evt) {
   evt.preventDefault();
   userName.textContent = nameInput.value;
   userJob.textContent = jobInput.value;
-
   closePopup();
 }
 
 editBtn.addEventListener('click', showPopup);
-closeBtn.addEventListener('click', closePopup);
+addBtn.addEventListener('click', showCardPopup);
 popupForm.addEventListener('submit', formSubmitHandler);
+closeBtns.forEach(button => {
+  button.addEventListener('click', closePopup);
+});
+
