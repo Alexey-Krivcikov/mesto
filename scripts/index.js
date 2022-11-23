@@ -39,7 +39,7 @@ const initialCards = [
   }
 ];
 
-// ! Добавление карточек
+// ! Добавление карточек по умолчанию
 for (let i = 0; i < initialCards.length; i++) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   cardElement.querySelector('.card__img').setAttribute('src', initialCards[i].link);
@@ -69,12 +69,23 @@ const formSubmitHandler = function (evt) {
   evt.preventDefault();
   userName.textContent = nameInput.value;
   userJob.textContent = jobInput.value;
+  console.log('asadsdasdasda');
   closePopup();
 }
-
+// ! Добавление новой карточки
+const cardAdd = function(evt) {
+  evt.preventDefault();
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+  cardElement.querySelector('.card__img').setAttribute('src', popupCard.querySelector('.popup__input_type_card-link').value);
+  cardElement.querySelector('.card__title').textContent = popupCard.querySelector('.popup__input_type_card-name').value;
+  cardList.insertBefore(cardElement, cardList.firstChild);
+  closePopup();
+}
+// ! Слушатели событий
 editBtn.addEventListener('click', showPopup);
-addBtn.addEventListener('click', showCardPopup);
 popupForm.addEventListener('submit', formSubmitHandler);
+addBtn.addEventListener('click', showCardPopup);
+popupCard.addEventListener('submit', cardAdd);
 closeBtns.forEach(button => {
   button.addEventListener('click', closePopup);
 });
