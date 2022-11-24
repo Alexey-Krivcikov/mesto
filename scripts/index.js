@@ -46,6 +46,12 @@ for (let i = 0; i < initialCards.length; i++) {
   cardElement.querySelector('.card__title').textContent = initialCards[i].name;
   cardList.append(cardElement);
 }
+// ! Кнопка лайка
+let likeBtns = cardList.querySelectorAll('.card__like-btn');
+
+const likeActive = function (evt) {
+  evt.target.classList.toggle('card__like-btn_active');
+}
 
 // ! Открытие и закрытие popup'a
 const showPopup = function() {
@@ -69,7 +75,6 @@ const formSubmitHandler = function (evt) {
   evt.preventDefault();
   userName.textContent = nameInput.value;
   userJob.textContent = jobInput.value;
-  console.log('asadsdasdasda');
   closePopup();
 }
 // ! Добавление новой карточки
@@ -89,4 +94,7 @@ popupCard.addEventListener('submit', cardAdd);
 closeBtns.forEach(button => {
   button.addEventListener('click', closePopup);
 });
+likeBtns.forEach(button => {
+  button.addEventListener('click', likeActive);
+})
 
