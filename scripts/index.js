@@ -53,6 +53,13 @@ const likeActive = function (evt) {
   evt.target.classList.toggle('card__like-btn_active');
 }
 
+// ! Удаление карточки
+let delBtns = cardList.querySelectorAll('.card__del-btn');
+
+const removeCard = function(evt) {
+  evt.target.closest('.card').remove()
+}
+
 // ! Открытие и закрытие popup'a
 const showPopup = function() {
   popup.classList.add('popup_opened');
@@ -96,5 +103,8 @@ closeBtns.forEach(button => {
 });
 likeBtns.forEach(button => {
   button.addEventListener('click', likeActive);
+})
+delBtns.forEach(button => {
+  button.addEventListener('click', removeCard);
 })
 
