@@ -60,6 +60,17 @@ const removeCard = function(evt) {
   evt.target.closest('.card').remove()
 }
 
+// ! Попап карточки
+const popupCardOpen = document.querySelector('.popup_type_card-open');
+let cardsImg = document.querySelectorAll('.card__img');
+const showCardPopupImg = function(evt) {
+  popupCardOpen.classList.add('popup_opened');
+  const srcImg = evt.target.getAttribute('src');
+  const ImgDescr = evt.target.closest('.card').querySelector('.card__title').textContent
+  popupCardOpen.querySelector('.popup__img').setAttribute('src', srcImg);
+  popupCardOpen.querySelector('.popup__img-desc').textContent = ImgDescr
+}
+
 // ! Открытие и закрытие popup'a
 const showPopup = function() {
   popup.classList.add('popup_opened');
@@ -93,6 +104,7 @@ const cardAdd = function(evt) {
   cardList.insertBefore(cardElement, cardList.firstChild);
   closePopup();
 }
+
 // ! Слушатели событий
 editBtn.addEventListener('click', showPopup);
 popupForm.addEventListener('submit', formSubmitHandler);
@@ -103,8 +115,12 @@ closeBtns.forEach(button => {
 });
 likeBtns.forEach(button => {
   button.addEventListener('click', likeActive);
-})
+});
 delBtns.forEach(button => {
   button.addEventListener('click', removeCard);
-})
+});
+cardsImg.forEach(card => {
+  card.addEventListener('click', showCardPopupImg)
+});
+
 
