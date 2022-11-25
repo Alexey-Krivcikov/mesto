@@ -28,50 +28,9 @@
       <button class="profile__add-btn" type="button"></button>
     </section>
 
-    <section class="main__cards cards">
+    <section class="main__cards cards" aria-label="Картинки с красивыми местами">
       <ul class="cards__list">
-        <li class="card">
-          <img class="card__img" src="./images/card_1.jpg" alt="Карачаевск">
-          <div class="card__text">
-            <h2 class="card__title">Карачаевск</h2>
-            <button class="card__like-btn" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__img" src="./images/card_2.jpg" alt="Гора Эльбрус">
-          <div class="card__text">
-            <h2 class="card__title">Гора Эльбрус</h2>
-            <button class="card__like-btn" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__img" src="./images/card-3.jpg" alt="Домбай">
-          <div class="card__text">
-            <h2 class="card__title">Домбай</h2>
-            <button class="card__like-btn" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__img" src="./images/card_4.jpg" alt="Водопады Игуасу">
-          <div class="card__text">
-            <h2 class="card__title">Водопады Игуасу</h2>
-            <button class="card__like-btn" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__img" src="./images/card_5.jpg" alt="Петра">
-          <div class="card__text">
-            <h2 class="card__title">Петра</h2>
-            <button class="card__like-btn" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__img" src="./images/card_6.jpg" alt="Гейрангер-фьорд">
-          <div class="card__text">
-            <h2 class="card__title">Гейрангер-фьорд</h2>
-            <button class="card__like-btn" type="button"></button>
-          </div>
-        </li>
+
       </ul>
     </section>
   </main>
@@ -91,6 +50,41 @@
       <button class="popup__close-btn" type="reset"></button>
     </div>
   </div>
+
+  <div class="popup popup_type_card">
+    <div class="popup__container">
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form" action="#" method="get" name="addCard">
+        <input class="popup__input popup__input_type_card-name" placeholder="Название" name="cardName" type="text">
+        <input class="popup__input popup__input_type_card-link" placeholder="Ссылка на картинку" name="cardLink" type="text">
+        <button class="popup__btn" type="submit">Создать</button>
+      </form>
+      <button class="popup__close-btn" type="reset"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_card-open">
+    <div class="popup__card-container">
+      <figure class="popup__item">
+        <img class="popup__img" src="#" alt="#">
+        <figcaption class="popup__img-desc"></figcaption>
+      </figure>
+
+      <button class="popup__close-btn" type="reset"></button>
+    </div>
+  </div>
+
+
+  <template id="card-element">
+    <li class="card">
+      <img class="card__img">
+      <button class="card__del-btn" type="button"></button>
+      <div class="card__text">
+        <h2 class="card__title"></h2>
+        <button class="card__like-btn" type="button"></button>
+      </div>
+    </li>
+  </template>
 
   <script src="./scripts/index.js"></script>
 </body>
