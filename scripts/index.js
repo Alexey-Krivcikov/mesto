@@ -9,10 +9,11 @@ const nameInput = popupForm.querySelector('.popup__input_type_name');
 const jobInput = popupForm.querySelector('.popup__input_type_job');
 const userName = document.querySelector('.profile__name');
 const userJob = document.querySelector('.profile__subtitle');
-const cardTemplate = document.querySelector('#card-element').content;
-const cardList = document.querySelector('.cards__list');
 
-const initialCards = [
+const cardListElement = document.querySelector('.cards__list');
+const cardTemplate = document.querySelector('#card-element').content.querySelector('.card');
+
+const cardsList = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -39,30 +40,58 @@ const initialCards = [
   }
 ];
 
-// ! Добавление карточек по умолчанию
-for (let i = 0; i < initialCards.length; i++) {
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  cardElement.querySelector('.card__img').setAttribute('src', initialCards[i].link);
-  cardElement.querySelector('.card__title').textContent = initialCards[i].name;
-  cardList.append(cardElement);
-}
-// ! Кнопка лайка
-let likeBtns = cardList.querySelectorAll('.card__like-btn');
 
+// ! Создание карточки
+const createElement = function(item) {
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardTitle = cardElement.querySelector('.card__title');
+  const cardLikeBtn = cardElement.querySelector('.card__like-btn');
+  const cardDeleteBtn = cardElement.querySelector('.card__del-btn');
+  const cardImg = cardElement.querySelector('.card__img');
+
+  cardLikeBtn.addEventListener('click', likeActive);
+  cardDeleteBtn.addEventListener('click', removeCard);
+
+  cardImg.src = item.link;
+  cardTitle.textContent = item.name;
+
+  return cardElement;
+}
+
+// ! функции кнопок удаления и лайка
 const likeActive = function (evt) {
   evt.target.classList.toggle('card__like-btn_active');
 }
-
-// ! Удаление карточки
-let delBtns = cardList.querySelectorAll('.card__del-btn');
 
 const removeCard = function(evt) {
   evt.target.closest('.card').remove()
 }
 
+// ! функция создает элемент и добавляет его
+const renderElement = (item, wrapElement) => {
+  const element = createElement(item);
+  wrapElement.append(element);
+}
+
+cardsList.forEach(function(item) {
+  renderElement(item, cardListElement);
+})
+
+// ! функция добавления карточки
+const cardAdd = function(evt) {
+  evt.preventDefault();
+  const cardElement = {
+    name: popupCard.querySelector('.popup__input_type_card-name').value,
+    link: popupCard.querySelector('.popup__input_type_card-link').value
+  };
+  cardListElement.insertBefore(createElement(cardElement), cardListElement.firstChild);
+  closePopup();
+}
+
+
 // ! Попап карточки
 const popupCardOpen = document.querySelector('.popup_type_card-open');
-let cardsImg = document.querySelectorAll('.card__img');
+const cardsImg = document.querySelectorAll('.card__img');
 const showCardPopupImg = function(evt) {
   popupCardOpen.classList.add('popup_opened');
   const srcImg = evt.target.getAttribute('src');
@@ -95,30 +124,17 @@ const formSubmitHandler = function (evt) {
   userJob.textContent = jobInput.value;
   closePopup();
 }
-// ! Добавление новой карточки
-const cardAdd = function(evt) {
-  evt.preventDefault();
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  cardElement.querySelector('.card__img').setAttribute('src', popupCard.querySelector('.popup__input_type_card-link').value);
-  cardElement.querySelector('.card__title').textContent = popupCard.querySelector('.popup__input_type_card-name').value;
-  cardList.insertBefore(cardElement, cardList.firstChild);
-  closePopup();
-}
+
 
 // ! Слушатели событий
 editBtn.addEventListener('click', showPopup);
 popupForm.addEventListener('submit', formSubmitHandler);
-addBtn.addEventListener('click', showCardPopup);
-popupCard.addEventListener('submit', cardAdd);
 closeBtns.forEach(button => {
   button.addEventListener('click', closePopup);
 });
-likeBtns.forEach(button => {
-  button.addEventListener('click', likeActive);
-});
-delBtns.forEach(button => {
-  button.addEventListener('click', removeCard);
-});
+addBtn.addEventListener('click', showCardPopup);
+popupCard.addEventListener('submit', cardAdd);
+
 cardsImg.forEach(card => {
   card.addEventListener('click', showCardPopupImg)
 });
