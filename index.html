@@ -10,12 +10,12 @@
 </head>
 
 <body class="page">
+
   <header class="page__header header">
     <img class="logo" src="./images/logo.svg" alt="логотип mesto">
   </header>
 
   <main class="main page__main">
-
     <section class="main__profile profile">
       <img class="profile__avatar" src="./images/avatar.png" alt="аватар">
       <div class="profile__info">
@@ -30,7 +30,6 @@
 
     <section class="main__cards cards" aria-label="Картинки с красивыми местами">
       <ul class="cards__list">
-
       </ul>
     </section>
   </main>
@@ -42,10 +41,12 @@
   <div class="popup popup_type_profile-info">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" action="#" method="get" name="profileInfo">
-        <input class="popup__input popup__input_type_name" name="userName" type="text">
-        <input class="popup__input popup__input_type_job" name="userJob" type="text">
-        <button class="popup__btn" type="submit">Сохранить</button>
+      <form class="popup__form" action="#" method="get" name="profileInfo" novalidate>
+          <input class="popup__input popup__input_type_name" id="user-name" name="userName" type="text" required minlength="2" maxlength="40">
+          <span class="popup__input-err user-name-error"></span>
+          <input class="popup__input popup__input_type_job" id="user-job" name="userJob" type="text" required minlength="2" maxlength="200">
+          <span class="popup__input-err user-job-error"></span>
+          <button class="popup__btn" type="submit">Сохранить</button>
       </form>
       <button class="popup__close-btn" type="reset"></button>
     </div>
@@ -54,9 +55,11 @@
   <div class="popup popup_type_card-add">
     <div class="popup__container">
       <h2 class="popup__title">Новое место</h2>
-      <form class="popup__form" action="#" method="get" name="addCard">
-        <input class="popup__input popup__input_type_card-name" placeholder="Название" name="cardName" type="text">
-        <input class="popup__input popup__input_type_card-link" placeholder="Ссылка на картинку" name="cardLink" type="text">
+      <form class="popup__form" action="#" method="get" name="addCard" novalidate>
+        <input class="popup__input popup__input_type_card-name" placeholder="Название" id="card-name" name="cardName" type="text" minlength="2" maxlength="30" required>
+        <span class="popup__input-err card-name-error"></span>
+        <input class="popup__input popup__input_type_card-link" placeholder="Ссылка на картинку" id="card-link" name="cardLink" type="url" required>
+        <span class="popup__input-err card-link-error"></span>
         <button class="popup__btn" type="submit">Создать</button>
       </form>
       <button class="popup__close-btn" type="reset"></button>
@@ -69,7 +72,6 @@
         <img class="popup__img" src="#" alt="#">
         <figcaption class="popup__img-desc"></figcaption>
       </figure>
-
       <button class="popup__close-btn" type="reset"></button>
     </div>
   </div>

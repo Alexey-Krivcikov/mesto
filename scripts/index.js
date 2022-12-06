@@ -10,6 +10,7 @@ const buttonAddCard = document.querySelector('.profile__add-btn');
 const formEditProfile = popupEditProfile.querySelector('.popup__form');
 const formAddCard = popupAddCard.querySelector('.popup__form');
 
+
 const nameInput = formEditProfile.querySelector('.popup__input_type_name');
 const jobInput = formEditProfile.querySelector('.popup__input_type_job');
 const userName = document.querySelector('.profile__name');
@@ -105,6 +106,65 @@ const handleProfileFormSubmit = function (evt) {
   userJob.textContent = jobInput.value;
   closePopup(popupEditProfile);
 };
+
+// !!! Валидация
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const formError = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__input_type_err');
+  formError.textContent = errorMessage;
+  formError.classList.add('popup__input-err_active');
+}
+
+const hideInputError = (formElement, inputElement) => {
+  const formError = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__input_type_err');
+  formError.classList.remove('popup__input-err_active');
+  formError.textContent = '';
+}
+
+const isValid = (formElement, inputElement) => {
+  if(!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+}
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some(inputElement => {
+    return !inputElement.validity.valid;
+  })
+}
+
+const toggleButtonState = (inputList, buttonElement) => {
+  if(hasInvalidInput(inputList)) {
+    buttonElement.classList.add('popup__btn_inactive');
+  } else {
+    buttonElement.classList.remove('popup__btn_inactive');
+  }
+}
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__btn');
+  toggleButtonState(inputList, buttonElement);
+  inputList.forEach(inputElement => {
+    inputElement.addEventListener('input', () => {
+      isValid(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    })
+  })
+}
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+
+  formList.forEach(formElement => {
+    setEventListeners(formElement);
+  })
+}
+
+enableValidation();
 
 // ! Слушатели событий
 buttonOpenProfilePopup.addEventListener('click', handleOpenPopupProfile);
