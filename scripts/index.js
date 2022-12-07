@@ -1,8 +1,12 @@
 import listCards from './cards.js';
 
+
+const page = document.querySelector('.page');
+
 const popupEditProfile = document.querySelector('.popup_type_profile-info');
 const popupAddCard = document.querySelector('.popup_type_card-add')
 const popupShowCardImg = document.querySelector('.popup_type_card-open');
+const popups = document.querySelectorAll('.popup');
 
 const buttonOpenProfilePopup = document.querySelector('.profile__edit-btn');
 const buttonAddCard = document.querySelector('.profile__add-btn');
@@ -123,7 +127,7 @@ const hideInputError = (formElement, inputElement) => {
 }
 
 const isValid = (formElement, inputElement) => {
-  if(!inputElement.validity.valid) {
+  if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
     hideInputError(formElement, inputElement);
@@ -137,7 +141,7 @@ const hasInvalidInput = (inputList) => {
 }
 
 const toggleButtonState = (inputList, buttonElement) => {
-  if(hasInvalidInput(inputList)) {
+  if (hasInvalidInput(inputList)) {
     buttonElement.classList.add('popup__btn_inactive');
   } else {
     buttonElement.classList.remove('popup__btn_inactive');
@@ -180,5 +184,20 @@ buttonsClosePopup.forEach(button => {
   });
 });
 
+// ! Закрытие попапа на Esc
 
+page.addEventListener('keydown', (evt) => {
+  popups.forEach(popup => {
+    if (evt.key === 'Escape') {
+      closePopup(popup)
+    }
+  });
+});
 
+popups.forEach(popup => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target === evt.currentTarget) {
+      closePopup(popup);
+    }
+  });
+});
