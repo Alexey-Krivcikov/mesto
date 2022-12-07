@@ -1,5 +1,5 @@
 import listCards from './cards.js';
-
+import {enableValidation, form} from './validate.js';
 
 const page = document.querySelector('.page');
 
@@ -13,7 +13,6 @@ const buttonAddCard = document.querySelector('.profile__add-btn');
 
 const formEditProfile = popupEditProfile.querySelector('.popup__form');
 const formAddCard = popupAddCard.querySelector('.popup__form');
-
 
 const nameInput = formEditProfile.querySelector('.popup__input_type_name');
 const jobInput = formEditProfile.querySelector('.popup__input_type_job');
@@ -30,7 +29,6 @@ const cardDescriptionPopup = popupShowCardImg.querySelector('.popup__img-desc');
 
 const cardListElement = document.querySelector('.cards__list');
 const cardTemplate = document.querySelector('#card-element').content.querySelector('.card');
-
 
 // ! Функция создает карточку
 const createCard = function (cardData) {
@@ -111,64 +109,8 @@ const handleProfileFormSubmit = function (evt) {
   closePopup(popupEditProfile);
 };
 
-// !!! Валидация
-const showInputError = (formElement, inputElement, errorMessage) => {
-  const formError = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('popup__input_type_err');
-  formError.textContent = errorMessage;
-  formError.classList.add('popup__input-err_active');
-}
-
-const hideInputError = (formElement, inputElement) => {
-  const formError = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('popup__input_type_err');
-  formError.classList.remove('popup__input-err_active');
-  formError.textContent = '';
-}
-
-const isValid = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-  } else {
-    hideInputError(formElement, inputElement);
-  }
-}
-
-const hasInvalidInput = (inputList) => {
-  return inputList.some(inputElement => {
-    return !inputElement.validity.valid;
-  })
-}
-
-const toggleButtonState = (inputList, buttonElement) => {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('popup__btn_inactive');
-  } else {
-    buttonElement.classList.remove('popup__btn_inactive');
-  }
-}
-
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-  const buttonElement = formElement.querySelector('.popup__btn');
-  toggleButtonState(inputList, buttonElement);
-  inputList.forEach(inputElement => {
-    inputElement.addEventListener('input', () => {
-      isValid(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
-    })
-  })
-}
-
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
-
-  formList.forEach(formElement => {
-    setEventListeners(formElement);
-  })
-}
-
-enableValidation();
+// ! Валидация
+enableValidation(form);
 
 // ! Слушатели событий
 buttonOpenProfilePopup.addEventListener('click', handleOpenPopupProfile);
@@ -185,7 +127,6 @@ buttonsClosePopup.forEach(button => {
 });
 
 // ! Закрытие попапа на Esc
-
 page.addEventListener('keydown', (evt) => {
   popups.forEach(popup => {
     if (evt.key === 'Escape') {
@@ -194,6 +135,7 @@ page.addEventListener('keydown', (evt) => {
   });
 });
 
+// ! Закрытие попапа при клике на внешнюю область
 popups.forEach(popup => {
   popup.addEventListener('click', (evt) => {
     if (evt.target === evt.currentTarget) {
