@@ -1,8 +1,12 @@
 import listCards from './cards.js';
+import {enableValidation, form} from './validate.js';
+
+const page = document.querySelector('.page');
 
 const popupEditProfile = document.querySelector('.popup_type_profile-info');
 const popupAddCard = document.querySelector('.popup_type_card-add')
 const popupShowCardImg = document.querySelector('.popup_type_card-open');
+const popups = document.querySelectorAll('.popup');
 
 const buttonOpenProfilePopup = document.querySelector('.profile__edit-btn');
 const buttonAddCard = document.querySelector('.profile__add-btn');
@@ -25,7 +29,6 @@ const cardDescriptionPopup = popupShowCardImg.querySelector('.popup__img-desc');
 
 const cardListElement = document.querySelector('.cards__list');
 const cardTemplate = document.querySelector('#card-element').content.querySelector('.card');
-
 
 // ! Функция создает карточку
 const createCard = function (cardData) {
@@ -106,6 +109,9 @@ const handleProfileFormSubmit = function (evt) {
   closePopup(popupEditProfile);
 };
 
+// ! Валидация
+enableValidation(form);
+
 // ! Слушатели событий
 buttonOpenProfilePopup.addEventListener('click', handleOpenPopupProfile);
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
@@ -120,5 +126,20 @@ buttonsClosePopup.forEach(button => {
   });
 });
 
+// ! Закрытие попапа на Esc
+page.addEventListener('keydown', (evt) => {
+  popups.forEach(popup => {
+    if (evt.key === 'Escape') {
+      closePopup(popup)
+    }
+  });
+});
 
-
+// ! Закрытие попапа при клике на внешнюю область
+popups.forEach(popup => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target === evt.currentTarget) {
+      closePopup(popup);
+    }
+  });
+});
