@@ -1,8 +1,7 @@
 import listCards from "./cards.js";
-import { FormValidator, form } from "./FormValidator.js";
+import { FormValidator, validationConfig } from "./FormValidator.js";
 import { Card } from "./Card.js";
-
-const page = document.querySelector(".page");
+import { openPopup, closePopup } from "./utils.js";
 
 const popupEditProfile = document.querySelector(".popup_type_profile-info");
 const popupAddCard = document.querySelector(".popup_type_card-add");
@@ -24,11 +23,23 @@ const cardLink = popupAddCard.querySelector(".popup__input_type_card-link");
 
 const cardListElement = document.querySelector(".cards__list");
 
+// ! Создание карточки
+const createCard = (cardData, templateSelector) => {
+  const card = new Card(cardData, templateSelector);
+  return card;
+};
+
+// ! Создание и включение валидатора
+const createValidation = (settings, formElement) => {
+  const validator = new FormValidator(settings, formElement);
+  return validator;
+};
+
 // ! Добавление стартовых карточек
 listCards.forEach((cardItem) => {
-  const card = new Card(cardItem, "#card-element");
+  const card = createCard(cardItem, "#card-element");
   const cardElement = card.generateCard();
-  document.querySelector(".cards__list").append(cardElement);
+  cardListElement.append(cardElement);
 });
 
 // ! Функция открытия формы добавления карточки
@@ -38,7 +49,7 @@ const handleCardFormSubmit = function (evt) {
     name: cardName.value,
     link: cardLink.value,
   };
-  const newCard = new Card(cardElement, "#card-element");
+  const newCard = createCard(cardElement, "#card-element");
   const newCardElement = newCard.generateCard();
   cardListElement.prepend(newCardElement);
   closePopup(popupAddCard);
@@ -60,39 +71,26 @@ const handleProfileFormSubmit = function (evt) {
   closePopup(popupEditProfile);
 };
 
-// ! Закрытие попапа на Esc
-const closeByEsc = (evt) => {
-  if (evt.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    closePopup(openedPopup);
-  }
-};
-
-// ! Функция открытия попапа
-const openPopup = (popup) => {
-  popup.classList.add("popup_opened");
-  page.addEventListener("keydown", closeByEsc);
-};
-
-// ! Функция закрытия попапа
-const closePopup = (popup) => {
-  popup.classList.remove("popup_opened");
-  page.removeEventListener("keydown", closeByEsc);
-};
-
 // ! Валидация
-new FormValidator(form, formEditProfile).enableValidation();
-new FormValidator(form, formAddCard).enableValidation();
+const formProfileValidation = createValidation(
+  validationConfig,
+  formEditProfile
+);
+const formAddCardValidation = createValidation(validationConfig, formAddCard);
+formProfileValidation.enableValidation();
+formAddCardValidation.enableValidation();
 
 // ! Слушатели событий
-buttonOpenProfilePopup.addEventListener("click", handleOpenPopupProfile);
+buttonOpenProfilePopup.addEventListener("click", () => {
+  handleOpenPopupProfile();
+  formProfileValidation.hideInputErrorWithOpening();
+});
 formEditProfile.addEventListener("submit", handleProfileFormSubmit);
 
 buttonAddCard.addEventListener("click", () => {
   openPopup(popupAddCard);
-  const submitBtn = popupAddCard.querySelector(".popup__btn");
-  submitBtn.setAttribute("disabled", "disabled");
-  submitBtn.classList.add("popup__btn_inactive");
+  formAddCardValidation.hideInputErrorWithOpening();
+  formAddCardValidation.disableSubmitButton();
 });
 formAddCard.addEventListener("submit", handleCardFormSubmit);
 

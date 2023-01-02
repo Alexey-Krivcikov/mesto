@@ -7,6 +7,12 @@ class FormValidator {
     this._inactiveButtonClass = settings.inactiveButtonClass;
     this._inputErrorClass = settings.inputErrorClass;
     this._errorClass = settings.errorClass;
+    this._inputList = [
+      ...this._formElement.querySelectorAll(this._inputSelector),
+    ];
+    this._buttonElement = this._formElement.querySelector(
+      this._submitButtonSelector
+    );
   }
 
   _showInputError(inputElement) {
@@ -36,10 +42,7 @@ class FormValidator {
   }
 
   _hasInvalidInput() {
-    const inputList = [
-      ...this._formElement.querySelectorAll(this._inputSelector),
-    ];
-    return inputList.some((inputElement) => {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
@@ -55,17 +58,11 @@ class FormValidator {
   }
 
   _setEventListeners() {
-    const inputList = [
-      ...this._formElement.querySelectorAll(this._inputSelector),
-    ];
-    const buttonElement = this._formElement.querySelector(
-      this._submitButtonSelector
-    );
-    this._toggleButtonState(buttonElement);
-    inputList.forEach((inputElement) => {
+    this._toggleButtonState(this._buttonElement);
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._isValid(inputElement);
-        this._toggleButtonState(buttonElement);
+        this._toggleButtonState(this._buttonElement);
       });
     });
   }
@@ -73,9 +70,26 @@ class FormValidator {
   enableValidation() {
     this._setEventListeners();
   }
+
+  disableSubmitButton() {
+    this._buttonElement.setAttribute("disabled", "disabled");
+    this._buttonElement.classList.add("popup__btn_inactive");
+  }
+
+  hideInputErrorWithOpening() {
+    this._inputList.forEach((inputElement) => {
+      const formError = this._formElement.querySelector(
+        `.${inputElement.id}-error`
+      );
+      inputElement.classList.remove(this._inputErrorClass);
+      formError.classList.remove(this._errorClass);
+      formError.textContent = "";
+      inputElement.value = "";
+    });
+  }
 }
 
-const form = {
+const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__btn",
@@ -84,4 +98,4 @@ const form = {
   errorClass: "popup__input-err_active",
 };
 
-export { FormValidator, form };
+export { FormValidator, validationConfig };
