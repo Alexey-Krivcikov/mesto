@@ -1,3 +1,5 @@
+import { openPopup } from "./utils.js";
+
 const popupShowCardImg = document.querySelector(".popup_type_card-open");
 const cardImgPopup = popupShowCardImg.querySelector(".popup__img");
 const cardDescriptionPopup = popupShowCardImg.querySelector(".popup__img-desc");
@@ -56,23 +58,11 @@ class Card {
     this._element = null;
   }
 
-  _closeByEsc(evt) {
-    if (evt.key === "Escape") {
-      popupShowCardImg.classList.remove("popup_opened");
-      document.removeEventListener("keydown", this._closeByEsc);
-    }
-  }
-
-  _openPopup(popup) {
-    popup.classList.add("popup_opened");
-    document.addEventListener("keydown", this._closeByEsc);
-  }
-
   _handlePopupCardOpen() {
     cardImgPopup.src = this._image;
     cardImgPopup.alt = this._title;
     cardDescriptionPopup.textContent = this._title;
-    this._openPopup(popupShowCardImg);
+    openPopup(popupShowCardImg);
   }
 }
 

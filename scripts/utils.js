@@ -18,4 +18,4 @@ const closePopup = (popup) => {
   document.removeEventListener("keydown", closeByEsc);
 };
 
-export { openPopup, closePopup };
+export { openPopup, closePopup, closeByEsc };

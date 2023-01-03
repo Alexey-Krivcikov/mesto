@@ -23,13 +23,13 @@ const cardLink = popupAddCard.querySelector(".popup__input_type_card-link");
 
 const cardListElement = document.querySelector(".cards__list");
 
-// ! Создание карточки
+// ! Функция создания карточки
 const createCard = (cardData, templateSelector) => {
   const card = new Card(cardData, templateSelector);
   return card;
 };
 
-// ! Создание и включение валидатора
+// ! Функция создания валидатора
 const createValidation = (settings, formElement) => {
   const validator = new FormValidator(settings, formElement);
   return validator;
@@ -77,6 +77,7 @@ const formProfileValidation = createValidation(
   formEditProfile
 );
 const formAddCardValidation = createValidation(validationConfig, formAddCard);
+
 formProfileValidation.enableValidation();
 formAddCardValidation.enableValidation();
 
@@ -84,6 +85,7 @@ formAddCardValidation.enableValidation();
 buttonOpenProfilePopup.addEventListener("click", () => {
   handleOpenPopupProfile();
   formProfileValidation.hideInputErrorWithOpening();
+  formProfileValidation.disableSubmitButton();
 });
 formEditProfile.addEventListener("submit", handleProfileFormSubmit);
 
