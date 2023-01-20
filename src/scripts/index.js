@@ -16,6 +16,8 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 
+import "./../pages/index.css";
+
 // Функция создания валидатора
 const createValidation = (settings, formElement) => {
   const validator = new FormValidator(settings, formElement);

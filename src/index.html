@@ -5,19 +5,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 
 <body class="page">
 
   <header class="page__header header">
-    <img class="logo" src="./images/logo.svg" alt="логотип mesto">
+    <img class="logo" src="<%=require('./images/logo.svg')%>" alt="логотип mesto">
   </header>
 
   <main class="main page__main">
     <section class="main__profile profile">
-      <img class="profile__avatar" src="./images/avatar.png" alt="аватар">
+      <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="аватар">
       <div class="profile__info">
         <div class="profile__title">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -52,6 +51,7 @@
       </form>
       <button class="popup__close-btn" type="reset"></button>
     </div>
+
   </div>
 
   <div class="popup popup_type_card-add">
@@ -92,7 +92,6 @@
     </li>
   </template>
 
-  <script src="./scripts/index.js" type="module"></script>
 </body>
 
 </html>
