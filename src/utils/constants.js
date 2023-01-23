@@ -7,9 +7,6 @@ const buttonAddCard = document.querySelector(".profile__add-btn");
 const formEditProfile = popupEditProfile.querySelector(".popup__form");
 const formAddCard = popupAddCard.querySelector(".popup__form");
 
-const inputUserName = document.querySelector(".popup__input_type_name");
-const inputUserDescription = document.querySelector(".popup__input_type_job");
-
 const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
@@ -51,8 +48,6 @@ export {
   buttonAddCard,
   formEditProfile,
   formAddCard,
-  inputUserName,
-  inputUserDescription,
   validationConfig,
   listCards,
 };

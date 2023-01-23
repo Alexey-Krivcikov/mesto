@@ -3,8 +3,6 @@ import {
   buttonAddCard,
   formEditProfile,
   formAddCard,
-  inputUserName,
-  inputUserDescription,
   validationConfig,
   listCards,
 } from "../utils/constants.js";
@@ -17,6 +15,7 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 
 import "./../pages/index.css";
+import { data } from "autoprefixer";
 
 // Функция создания валидатора
 const createValidation = (settings, formElement) => {
@@ -32,21 +31,22 @@ const formEditProfiledValidation = createValidation(
 formEditProfiledValidation.enableValidation();
 
 const userInfo = new UserInfo({
-  name: ".profile__name",
-  description: ".profile__subtitle",
+  userName: ".profile__name",
+  userJob: ".profile__subtitle",
 });
 
-const popupProfileEdit = new PopupWithForm(".popup_type_profile-info", () => {
-  userInfo.setUserInfo(inputUserName, inputUserDescription);
-});
-
+const popupProfileEdit = new PopupWithForm(
+  ".popup_type_profile-info",
+  (formData) => {
+    userInfo.setUserInfo(formData);
+  }
+);
 popupProfileEdit.setEventListeners();
 
 buttonOpenProfilePopup.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
-  inputUserName.value = userData.name;
-  inputUserDescription.value = userData.description;
-
+  console.log(userData);
+  popupProfileEdit.setInputValues(userData);
   formEditProfiledValidation.disableSubmitButton();
   formEditProfiledValidation.hideInputErrorWithOpening();
 
@@ -55,6 +55,7 @@ buttonOpenProfilePopup.addEventListener("click", () => {
 
 // Попап добавление карточки
 const popupImageObj = new PopupWithImage(".popup_type_card-open");
+popupImageObj.setEventListeners();
 // функция создания карточки
 const createCard = (item) => {
   return new Card(
@@ -90,6 +91,7 @@ const popupCardAdd = new PopupWithForm(".popup_type_card-add", (items) => {
   const cardElement = card.generateCard();
   cardArr.addItem(cardElement);
 });
+popupCardAdd.setEventListeners();
 
 buttonAddCard.addEventListener("click", () => {
   formAddCardValidation.disableSubmitButton();

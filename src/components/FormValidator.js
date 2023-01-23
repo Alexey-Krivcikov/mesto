@@ -84,7 +84,6 @@ export default class FormValidator {
       inputElement.classList.remove(this._inputErrorClass);
       formError.classList.remove(this._errorClass);
       formError.textContent = "";
-      inputElement.value = "";
     });
   }
 }
