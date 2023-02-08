@@ -1,11 +1,20 @@
 const popupEditProfile = document.querySelector(".popup_type_profile-info");
 const popupAddCard = document.querySelector(".popup_type_card-add");
+const popupAvatar = document.querySelector(".popup_type_avatar");
+const popupDelete = document.querySelector(".popup_type_delete");
 
 const buttonOpenProfilePopup = document.querySelector(".profile__edit-btn");
 const buttonAddCard = document.querySelector(".profile__add-btn");
+const buttonAddAvatar = document.querySelector(".profile__avatar-btn");
 
 const formEditProfile = popupEditProfile.querySelector(".popup__form");
 const formAddCard = popupAddCard.querySelector(".popup__form");
+const formEditAvatar = popupAvatar.querySelector(".popup__form");
+
+const editSubmitBtn = popupEditProfile.querySelector(".popup__btn");
+const addCardSubmitBtn = popupAddCard.querySelector(".popup__btn");
+const avatarSubmitBtn = popupAvatar.querySelector(".popup__btn");
+const deleteSubmitBtn = popupDelete.querySelector(".popup__btn");
 
 const validationConfig = {
   formSelector: ".popup__form",
@@ -16,38 +25,16 @@ const validationConfig = {
   errorClass: "popup__input-err_active",
 };
 
-const listCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
 export {
   buttonOpenProfilePopup,
   buttonAddCard,
   formEditProfile,
   formAddCard,
   validationConfig,
-  listCards,
+  editSubmitBtn,
+  addCardSubmitBtn,
+  avatarSubmitBtn,
+  buttonAddAvatar,
+  formEditAvatar,
+  deleteSubmitBtn,
 };

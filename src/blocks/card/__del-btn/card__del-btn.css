@@ -12,6 +12,7 @@
   top: 20px;
   right: 20px;
   transition: opacity .5s;
+  visibility: hidden;
 }
 
 .card__del-btn:hover {
