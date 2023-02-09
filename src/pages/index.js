@@ -1,15 +1,11 @@
 import {
   buttonOpenProfilePopup,
   buttonAddCard,
+  buttonAddAvatar,
   formEditProfile,
   formAddCard,
-  validationConfig,
-  editSubmitBtn,
-  addCardSubmitBtn,
-  avatarSubmitBtn,
-  buttonAddAvatar,
   formEditAvatar,
-  deleteSubmitBtn,
+  validationConfig,
 } from "../utils/constants.js";
 
 import Api from "../components/Api.js";
@@ -24,6 +20,81 @@ import UserInfo from "../components/UserInfo.js";
 import "./../pages/index.css";
 import { data } from "autoprefixer";
 
+/**
+ * Функция открытия попапа
+ * @param {object} popup - Попап
+ * @param {object} popupForm - Форма попапа
+ */
+const handlePopupOpen = (popup, popupForm) => {
+  popupForm.disableSubmitButton();
+  popupForm.hideInputErrors();
+  popup.open();
+};
+
+// Функция включения валидатора
+const enableValidation = (settings, formElement) => {
+  const validator = new FormValidator(settings, formElement);
+  return validator;
+};
+
+// функция создания карточки
+const createCard = (cardData) => {
+  const card = new Card(
+    cardData,
+    userId,
+    "#card-element",
+    addLike,
+    deleteLike,
+    handleDelete,
+    handleCardClick
+  );
+  const cardElement = card.generateCard();
+  cardsSection.addItem(cardElement);
+  function handleCardClick(cardData) {
+    popupImageObj.open(cardData);
+  }
+  function handleDelete(cardData) {
+    popupDeleteCard.setFormSubmitHandler(() => {
+      popupDeleteCard.renderLoading(true, "Удаление...", "Да");
+      api
+        .deleteCard(cardData._id)
+        .then(() => {
+          card.deleteCard();
+          popupDeleteCard.close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          popupDeleteCard.renderLoading(false, "Удаление...", "Да");
+        });
+    });
+    popupDeleteCard.open();
+  }
+  function addLike(cardId) {
+    api
+      .addLike(cardId)
+      .then((data) => {
+        // console.log(data.likes);
+        card.updateLikes(data.likes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function deleteLike(cardId) {
+    api
+      .deleteLike(cardId)
+      .then((data) => {
+        // console.log(data.likes);
+        card.updateLikes(data.likes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+};
+
 // API
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-59",
@@ -32,23 +103,6 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-
-// Функция создания валидатора
-const createValidation = (settings, formElement) => {
-  const validator = new FormValidator(settings, formElement);
-  return validator;
-};
-
-// Функция для улучшения UX форм
-function renderLoading(isLoading, button, message) {
-  if (isLoading && message) {
-    button.textContent = message;
-  } else if (isLoading) {
-    button.textContent = "Сохранение..";
-  } else {
-    button.textContent = "Сохранить";
-  }
-}
 
 // данные пользователя
 const userInfo = new UserInfo({
@@ -67,22 +121,9 @@ const popupDeleteCard = new PopupWithConfirmation({
 });
 popupDeleteCard.setEventListeners();
 
-let userId = "";
-
-// получаем от сервера карточки и данные пользователя
-Promise.all([api.getUserInfo(), api.getInitialCards()])
-  .then(([userData, cardsData]) => {
-    userId = userData._id;
-    userInfo.setUserInfo(userData);
-    cardArr.renderItems(cardsData);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 // попап добавления новой карточки
 const popupCardAdd = new PopupWithForm(".popup_type_card-add", (cardData) => {
-  renderLoading(true, addCardSubmitBtn);
+  popupCardAdd.renderLoading(true);
   api
     .addNewCard(cardData)
     .then((cardData) => {
@@ -93,7 +134,7 @@ const popupCardAdd = new PopupWithForm(".popup_type_card-add", (cardData) => {
       console.log(err);
     })
     .finally(() => {
-      renderLoading(false, addCardSubmitBtn);
+      popupCardAdd.renderLoading(false);
     });
 });
 popupCardAdd.setEventListeners();
@@ -102,7 +143,7 @@ popupCardAdd.setEventListeners();
 const popupProfileEdit = new PopupWithForm(
   ".popup_type_profile-info",
   (formData) => {
-    renderLoading(true, editSubmitBtn);
+    popupProfileEdit.renderLoading(true);
     api
       .setUserInfo(formData)
       .then((formData) => {
@@ -110,14 +151,14 @@ const popupProfileEdit = new PopupWithForm(
         popupProfileEdit.close();
       })
       .catch((err) => console.log(err))
-      .finally(() => renderLoading(false, editSubmitBtn));
+      .finally(() => popupProfileEdit.renderLoading(false));
   }
 );
 popupProfileEdit.setEventListeners();
 
 // попап аватара
 const popupAvatar = new PopupWithForm(".popup_type_avatar", (avatarData) => {
-  renderLoading(true, avatarSubmitBtn);
+  popupAvatar.renderLoading(true);
   api
     .setAvatar(avatarData)
     .then((avatarData) => {
@@ -128,62 +169,14 @@ const popupAvatar = new PopupWithForm(".popup_type_avatar", (avatarData) => {
       console.log(err);
     })
     .finally(() => {
-      renderLoading(false, avatarSubmitBtn);
+      popupAvatar.renderLoading(false);
     });
 });
 popupAvatar.setEventListeners();
 
-// функция создания карточки
-const createCard = (cardData) => {
-  const card = new Card(
-    cardData,
-    userId,
-    "#card-element",
-    addLike,
-    deleteLike,
-    handleDelete,
-    handleCardClick
-  );
-  const cardElement = card.generateCard();
-  cardArr.addItem(cardElement);
-  function handleCardClick(cardData) {
-    popupImageObj.open(cardData);
-  }
-  function handleDelete(cardData) {
-    popupDeleteCard.setFormSubmitHandler(() => {
-      renderLoading(true, deleteSubmitBtn, "Удаление...");
-      api
-        .deleteCard(cardData._id)
-        .then(() => {
-          card.deleteCard();
-          popupDeleteCard.close();
-          console.log("card deleted");
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          renderLoading(false, deleteSubmitBtn);
-        });
-    });
-    popupDeleteCard.open();
-  }
-  function addLike(cardId) {
-    api.addLike(cardId).catch((err) => {
-      console.log(err);
-    });
-  }
-  function deleteLike(cardId) {
-    api.deleteLike(cardId).catch((err) => {
-      console.log(err);
-    });
-  }
-};
-
 // добавление карточек на страницу
-const cardArr = new Section(
+const cardsSection = new Section(
   {
-    items: [],
     renderer: (cardData) => {
       createCard(cardData);
     },
@@ -192,41 +185,48 @@ const cardArr = new Section(
 );
 
 // валидация добавления карточки
-const formAddCardValidation = createValidation(validationConfig, formAddCard);
+const formAddCardValidation = enableValidation(validationConfig, formAddCard);
 formAddCardValidation.enableValidation();
 
 // Валидация попапа изменения профиля
-const formEditProfiledValidation = createValidation(
+const formEditProfiledValidation = enableValidation(
   validationConfig,
   formEditProfile
 );
 formEditProfiledValidation.enableValidation();
 
-const formEditAvatarValidation = createValidation(
+const formEditAvatarValidation = enableValidation(
   validationConfig,
   formEditAvatar
 );
 formEditAvatarValidation.enableValidation();
 
+let userId = "";
+
+// получаем от сервера карточки и данные пользователя
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cardsData]) => {
+    userId = userData._id;
+    userInfo.setUserInfo(userData);
+    cardsSection.renderItems(cardsData);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 // слушатель попапа добавления карточки
 buttonAddCard.addEventListener("click", () => {
-  formAddCardValidation.disableSubmitButton();
-  formAddCardValidation.hideInputErrorWithOpening();
-  popupCardAdd.open();
+  handlePopupOpen(popupCardAdd, formAddCardValidation);
 });
 
 // слушатель попапа изменения профиля
 buttonOpenProfilePopup.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
   popupProfileEdit.setInputValues(userData);
-  formEditProfiledValidation.disableSubmitButton();
-  formEditProfiledValidation.hideInputErrorWithOpening();
-  popupProfileEdit.open();
+  handlePopupOpen(popupProfileEdit, formEditProfiledValidation);
 });
 
 // слушатель попапа аватара
 buttonAddAvatar.addEventListener("click", () => {
-  formEditAvatarValidation.disableSubmitButton();
-  formEditAvatarValidation.hideInputErrorWithOpening();
-  popupAvatar.open();
+  handlePopupOpen(popupAvatar, formEditAvatarValidation);
 });

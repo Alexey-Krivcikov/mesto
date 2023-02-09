@@ -18,7 +18,7 @@
     <section class="main__profile profile">
 
       <div class="profile__avatar-container">
-        <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="аватар">
+        <img class="profile__avatar" alt="аватар">
         <div class="profile__cover">
           <button class="profile__avatar-btn"></button>
         </div>
@@ -98,7 +98,7 @@
   </div>
 
   <div class="popup popup_type_avatar">
-    <div class="popup__container">
+    <div class="popup__container popup__container_type_avatar">
       <h2 class="popup__title">Обновить аватар</h2>
       <form name="confirmAvatar" class="popup__form" novalidate>
         <input class="popup__input popup__input_type_avatar" placeholder="URL" id="avatar-url" name="avatar" type="url"

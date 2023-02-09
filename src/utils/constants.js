@@ -11,11 +11,6 @@ const formEditProfile = popupEditProfile.querySelector(".popup__form");
 const formAddCard = popupAddCard.querySelector(".popup__form");
 const formEditAvatar = popupAvatar.querySelector(".popup__form");
 
-const editSubmitBtn = popupEditProfile.querySelector(".popup__btn");
-const addCardSubmitBtn = popupAddCard.querySelector(".popup__btn");
-const avatarSubmitBtn = popupAvatar.querySelector(".popup__btn");
-const deleteSubmitBtn = popupDelete.querySelector(".popup__btn");
-
 const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
@@ -31,10 +26,6 @@ export {
   formEditProfile,
   formAddCard,
   validationConfig,
-  editSubmitBtn,
-  addCardSubmitBtn,
-  avatarSubmitBtn,
   buttonAddAvatar,
   formEditAvatar,
-  deleteSubmitBtn,
 };
