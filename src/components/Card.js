@@ -51,11 +51,12 @@ export default class Card {
   }
 
   _isLiked() {
-    this._likes.forEach((userLike) => {
-      if (userLike._id === this._userId) {
-        this._cardLikeBtn.classList.add("card__like-btn_active");
-      }
+    const isLiked = this._likes.some((userLike) => {
+      return userLike._id === this._userId;
     });
+    if (isLiked) {
+      this._cardLikeBtn.classList.add("card__like-btn_active");
+    }
   }
 
   updateLikes(cardLikes) {

@@ -26,7 +26,6 @@ import { data } from "autoprefixer";
  * @param {object} popupForm - Форма попапа
  */
 const handlePopupOpen = (popup, popupForm) => {
-  popupForm.disableSubmitButton();
   popupForm.hideInputErrors();
   popup.open();
 };
@@ -55,7 +54,7 @@ const createCard = (cardData) => {
   }
   function handleDelete(cardData) {
     popupDeleteCard.setFormSubmitHandler(() => {
-      popupDeleteCard.renderLoading(true, "Удаление...", "Да");
+      popupDeleteCard.renderLoading("Удаление...");
       api
         .deleteCard(cardData._id)
         .then(() => {
@@ -66,7 +65,7 @@ const createCard = (cardData) => {
           console.log(err);
         })
         .finally(() => {
-          popupDeleteCard.renderLoading(false, "Удаление...", "Да");
+          popupDeleteCard.renderLoading("Удаление...");
         });
     });
     popupDeleteCard.open();
@@ -123,7 +122,7 @@ popupDeleteCard.setEventListeners();
 
 // попап добавления новой карточки
 const popupCardAdd = new PopupWithForm(".popup_type_card-add", (cardData) => {
-  popupCardAdd.renderLoading(true);
+  popupCardAdd.renderLoading();
   api
     .addNewCard(cardData)
     .then((cardData) => {
@@ -134,7 +133,7 @@ const popupCardAdd = new PopupWithForm(".popup_type_card-add", (cardData) => {
       console.log(err);
     })
     .finally(() => {
-      popupCardAdd.renderLoading(false);
+      popupCardAdd.renderLoading();
     });
 });
 popupCardAdd.setEventListeners();
@@ -143,7 +142,7 @@ popupCardAdd.setEventListeners();
 const popupProfileEdit = new PopupWithForm(
   ".popup_type_profile-info",
   (formData) => {
-    popupProfileEdit.renderLoading(true);
+    popupProfileEdit.renderLoading();
     api
       .setUserInfo(formData)
       .then((formData) => {
@@ -151,14 +150,14 @@ const popupProfileEdit = new PopupWithForm(
         popupProfileEdit.close();
       })
       .catch((err) => console.log(err))
-      .finally(() => popupProfileEdit.renderLoading(false));
+      .finally(() => popupProfileEdit.renderLoading());
   }
 );
 popupProfileEdit.setEventListeners();
 
 // попап аватара
 const popupAvatar = new PopupWithForm(".popup_type_avatar", (avatarData) => {
-  popupAvatar.renderLoading(true);
+  popupAvatar.renderLoading();
   api
     .setAvatar(avatarData)
     .then((avatarData) => {
@@ -169,7 +168,7 @@ const popupAvatar = new PopupWithForm(".popup_type_avatar", (avatarData) => {
       console.log(err);
     })
     .finally(() => {
-      popupAvatar.renderLoading(false);
+      popupAvatar.renderLoading();
     });
 });
 popupAvatar.setEventListeners();
@@ -217,6 +216,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 // слушатель попапа добавления карточки
 buttonAddCard.addEventListener("click", () => {
   handlePopupOpen(popupCardAdd, formAddCardValidation);
+  formAddCardValidation.disableSubmitButton();
 });
 
 // слушатель попапа изменения профиля
@@ -229,4 +229,5 @@ buttonOpenProfilePopup.addEventListener("click", () => {
 // слушатель попапа аватара
 buttonAddAvatar.addEventListener("click", () => {
   handlePopupOpen(popupAvatar, formEditAvatarValidation);
+  formEditAvatarValidation.disableSubmitButton();
 });
